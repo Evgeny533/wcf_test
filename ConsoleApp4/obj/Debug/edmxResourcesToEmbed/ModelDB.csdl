@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProITModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ProITEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Log" EntityType="ProITModel.Log" />
+    <EntitySet Name="AGREEMENT" EntityType="ProITModel.AGREEMENT" />
+    <EntitySet Name="AGREEMENT_ORG" EntityType="ProITModel.AGREEMENT_ORG" />
+    <EntitySet Name="BO" EntityType="ProITModel.BO" />
+    <EntitySet Name="SCHEDULE" EntityType="ProITModel.SCHEDULE" />
+    <AssociationSet Name="FK_AGREEMENT_ORG_AGREEMENT" Association="ProITModel.FK_AGREEMENT_ORG_AGREEMENT">
+      <End Role="AGREEMENT" EntitySet="AGREEMENT" />
+      <End Role="AGREEMENT_ORG" EntitySet="AGREEMENT_ORG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BO_AGREEMENT_ORG" Association="ProITModel.FK_BO_AGREEMENT_ORG">
+      <End Role="AGREEMENT_ORG" EntitySet="AGREEMENT_ORG" />
+      <End Role="BO" EntitySet="BO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SCHEDULE_AGREEMENT_ORG" Association="ProITModel.FK_SCHEDULE_AGREEMENT_ORG">
+      <End Role="AGREEMENT_ORG" EntitySet="AGREEMENT_ORG" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULE" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Thread" />
+      <PropertyRef Name="Level" />
+      <PropertyRef Name="Logger" />
+      <PropertyRef Name="Message" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Thread" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Level" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Logger" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="Exception" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="AGREEMENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="caption" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <Property Name="KADM" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="budgetId" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="budgetSumm" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="dateFrom" Type="DateTime" Precision="0" />
+    <Property Name="dateTo" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="AGREEMENT_ORG" Relationship="ProITModel.FK_AGREEMENT_ORG_AGREEMENT" FromRole="AGREEMENT" ToRole="AGREEMENT_ORG" />
+  </EntityType>
+  <EntityType Name="AGREEMENT_ORG">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="agreementSumm" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="budgetReqsSumm" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="caption" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <Property Name="subsidySumm" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_agreement" Type="Int64" />
+    <NavigationProperty Name="AGREEMENT" Relationship="ProITModel.FK_AGREEMENT_ORG_AGREEMENT" FromRole="AGREEMENT_ORG" ToRole="AGREEMENT" />
+    <NavigationProperty Name="BO" Relationship="ProITModel.FK_BO_AGREEMENT_ORG" FromRole="AGREEMENT_ORG" ToRole="BO" />
+    <NavigationProperty Name="SCHEDULE" Relationship="ProITModel.FK_SCHEDULE_AGREEMENT_ORG" FromRole="AGREEMENT_ORG" ToRole="SCHEDULE" />
+  </EntityType>
+  <EntityType Name="BO">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Bo_number" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="amount" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="grbs" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="kcsr" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="kesr" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="kfsr" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="kvr" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="period" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="id_agreement_org" Type="Int64" />
+    <NavigationProperty Name="AGREEMENT_ORG" Relationship="ProITModel.FK_BO_AGREEMENT_ORG" FromRole="BO" ToRole="AGREEMENT_ORG" />
+  </EntityType>
+  <EntityType Name="SCHEDULE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="transferDate" Type="DateTime" Precision="0" />
+    <Property Name="transferSumm" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="id_agreement_org" Type="Int64" />
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="AGREEMENT_ORG" Relationship="ProITModel.FK_SCHEDULE_AGREEMENT_ORG" FromRole="SCHEDULE" ToRole="AGREEMENT_ORG" />
+  </EntityType>
+  <Association Name="FK_AGREEMENT_ORG_AGREEMENT">
+    <End Type="ProITModel.AGREEMENT" Role="AGREEMENT" Multiplicity="0..1" />
+    <End Type="ProITModel.AGREEMENT_ORG" Role="AGREEMENT_ORG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGREEMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="AGREEMENT_ORG">
+        <PropertyRef Name="id_agreement" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BO_AGREEMENT_ORG">
+    <End Type="ProITModel.AGREEMENT_ORG" Role="AGREEMENT_ORG" Multiplicity="0..1" />
+    <End Type="ProITModel.BO" Role="BO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGREEMENT_ORG">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BO">
+        <PropertyRef Name="id_agreement_org" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SCHEDULE_AGREEMENT_ORG">
+    <End Type="ProITModel.AGREEMENT_ORG" Role="AGREEMENT_ORG" Multiplicity="0..1" />
+    <End Type="ProITModel.SCHEDULE" Role="SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGREEMENT_ORG">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="id_agreement_org" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

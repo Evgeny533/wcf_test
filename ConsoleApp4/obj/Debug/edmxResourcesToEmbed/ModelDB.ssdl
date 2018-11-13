@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище ProITModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AGREEMENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="caption" Type="nchar" MaxLength="1000" />
+    <Property Name="KADM" Type="nchar" MaxLength="100" />
+    <Property Name="budgetId" Type="nchar" MaxLength="100" />
+    <Property Name="budgetSumm" Type="nchar" MaxLength="100" />
+    <Property Name="dateFrom" Type="smalldatetime" />
+    <Property Name="dateTo" Type="smalldatetime" />
+  </EntityType>
+  <EntityType Name="AGREEMENT_ORG">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="agreementSumm" Type="nchar" MaxLength="15" />
+    <Property Name="budgetReqsSumm" Type="nchar" MaxLength="15" />
+    <Property Name="caption" Type="nchar" MaxLength="1000" />
+    <Property Name="subsidySumm" Type="nchar" MaxLength="15" />
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_agreement" Type="bigint" />
+  </EntityType>
+  <EntityType Name="BO">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Bo_number" Type="nchar" MaxLength="15" />
+    <Property Name="amount" Type="nchar" MaxLength="15" />
+    <Property Name="grbs" Type="nchar" MaxLength="15" />
+    <Property Name="kcsr" Type="nchar" MaxLength="15" />
+    <Property Name="kesr" Type="nchar" MaxLength="15" />
+    <Property Name="kfsr" Type="nchar" MaxLength="15" />
+    <Property Name="kvr" Type="nchar" MaxLength="15" />
+    <Property Name="period" Type="nchar" MaxLength="15" />
+    <Property Name="id_agreement_org" Type="bigint" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "ProIT.dbo.Log" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Date" />
+      <PropertyRef Name="Thread" />
+      <PropertyRef Name="Level" />
+      <PropertyRef Name="Logger" />
+      <PropertyRef Name="Message" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Thread" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Level" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Logger" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Message" Type="varchar" MaxLength="4000" Nullable="false" />
+    <Property Name="Exception" Type="varchar" MaxLength="2000" />
+  </EntityType>
+  <EntityType Name="SCHEDULE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="transferDate" Type="smalldatetime" />
+    <Property Name="transferSumm" Type="nchar" MaxLength="15" />
+    <Property Name="id_agreement_org" Type="bigint" />
+    <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AGREEMENT_ORG_AGREEMENT">
+    <End Role="AGREEMENT" Type="Self.AGREEMENT" Multiplicity="0..1" />
+    <End Role="AGREEMENT_ORG" Type="Self.AGREEMENT_ORG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGREEMENT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="AGREEMENT_ORG">
+        <PropertyRef Name="id_agreement" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BO_AGREEMENT_ORG">
+    <End Role="AGREEMENT_ORG" Type="Self.AGREEMENT_ORG" Multiplicity="0..1" />
+    <End Role="BO" Type="Self.BO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGREEMENT_ORG">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BO">
+        <PropertyRef Name="id_agreement_org" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SCHEDULE_AGREEMENT_ORG">
+    <End Role="AGREEMENT_ORG" Type="Self.AGREEMENT_ORG" Multiplicity="0..1" />
+    <End Role="SCHEDULE" Type="Self.SCHEDULE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AGREEMENT_ORG">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SCHEDULE">
+        <PropertyRef Name="id_agreement_org" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище ProITModelContainer">
+    <EntitySet Name="AGREEMENT" EntityType="Self.AGREEMENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AGREEMENT_ORG" EntityType="Self.AGREEMENT_ORG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BO" EntityType="Self.BO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SCHEDULE" EntityType="Self.SCHEDULE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Log].[Id] AS [Id], 
+    [Log].[Date] AS [Date], 
+    [Log].[Thread] AS [Thread], 
+    [Log].[Level] AS [Level], 
+    [Log].[Logger] AS [Logger], 
+    [Log].[Message] AS [Message], 
+    [Log].[Exception] AS [Exception]
+    FROM [dbo].[Log] AS [Log]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_AGREEMENT_ORG_AGREEMENT" Association="Self.FK_AGREEMENT_ORG_AGREEMENT">
+      <End Role="AGREEMENT" EntitySet="AGREEMENT" />
+      <End Role="AGREEMENT_ORG" EntitySet="AGREEMENT_ORG" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BO_AGREEMENT_ORG" Association="Self.FK_BO_AGREEMENT_ORG">
+      <End Role="AGREEMENT_ORG" EntitySet="AGREEMENT_ORG" />
+      <End Role="BO" EntitySet="BO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SCHEDULE_AGREEMENT_ORG" Association="Self.FK_SCHEDULE_AGREEMENT_ORG">
+      <End Role="AGREEMENT_ORG" EntitySet="AGREEMENT_ORG" />
+      <End Role="SCHEDULE" EntitySet="SCHEDULE" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

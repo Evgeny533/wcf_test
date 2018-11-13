@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ProITModelContainer" CdmEntityContainer="ProITEntities">
+    <EntitySetMapping Name="Log">
+      <EntityTypeMapping TypeName="ProITModel.Log">
+        <MappingFragment StoreEntitySet="Log">
+          <ScalarProperty Name="Exception" ColumnName="Exception" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Logger" ColumnName="Logger" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="Thread" ColumnName="Thread" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AGREEMENT">
+      <EntityTypeMapping TypeName="ProITModel.AGREEMENT">
+        <MappingFragment StoreEntitySet="AGREEMENT">
+          <ScalarProperty Name="dateTo" ColumnName="dateTo" />
+          <ScalarProperty Name="dateFrom" ColumnName="dateFrom" />
+          <ScalarProperty Name="budgetSumm" ColumnName="budgetSumm" />
+          <ScalarProperty Name="budgetId" ColumnName="budgetId" />
+          <ScalarProperty Name="KADM" ColumnName="KADM" />
+          <ScalarProperty Name="caption" ColumnName="caption" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AGREEMENT_ORG">
+      <EntityTypeMapping TypeName="ProITModel.AGREEMENT_ORG">
+        <MappingFragment StoreEntitySet="AGREEMENT_ORG">
+          <ScalarProperty Name="id_agreement" ColumnName="id_agreement" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="subsidySumm" ColumnName="subsidySumm" />
+          <ScalarProperty Name="caption" ColumnName="caption" />
+          <ScalarProperty Name="budgetReqsSumm" ColumnName="budgetReqsSumm" />
+          <ScalarProperty Name="agreementSumm" ColumnName="agreementSumm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BO">
+      <EntityTypeMapping TypeName="ProITModel.BO">
+        <MappingFragment StoreEntitySet="BO">
+          <ScalarProperty Name="id_agreement_org" ColumnName="id_agreement_org" />
+          <ScalarProperty Name="period" ColumnName="period" />
+          <ScalarProperty Name="kvr" ColumnName="kvr" />
+          <ScalarProperty Name="kfsr" ColumnName="kfsr" />
+          <ScalarProperty Name="kesr" ColumnName="kesr" />
+          <ScalarProperty Name="kcsr" ColumnName="kcsr" />
+          <ScalarProperty Name="grbs" ColumnName="grbs" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="Bo_number" ColumnName="Bo_number" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SCHEDULE">
+      <EntityTypeMapping TypeName="ProITModel.SCHEDULE">
+        <MappingFragment StoreEntitySet="SCHEDULE">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="id_agreement_org" ColumnName="id_agreement_org" />
+          <ScalarProperty Name="transferSumm" ColumnName="transferSumm" />
+          <ScalarProperty Name="transferDate" ColumnName="transferDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
